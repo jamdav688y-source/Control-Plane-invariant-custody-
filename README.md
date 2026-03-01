@@ -1,5 +1,6 @@
 # Control Plane: Invariant Custody Architecture
-
+> Governance is not declared at admission.  
+> It is enforced at mutation.
 Stability-First AI Governance  
 Commit-Bound Authority · Drift-Constrained Execution · Cognitive Governor Layer
 
