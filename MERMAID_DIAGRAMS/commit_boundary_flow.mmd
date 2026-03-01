@@ -1,0 +1,22 @@
+flowchart TD
+
+A[Intent Declaration] --> B[Invariant Validation]
+B -->|pass| C[Authority Scope Validation]
+B -->|fail| H[HALT: Invariant Breach]
+
+C -->|pass| D[Rollback Path Verification]
+C -->|fail| I[HALT: Authority Relocation]
+
+D -->|pass| E[Drift Vector Scan]
+D -->|fail| J[HALT: No Rollback Defined]
+
+E -->|drift detected| K[Trigger Rollback + Sentinel Escalation]
+E -->|clean| F[Commit Boundary]
+
+F --> G[Judge Attestation]
+G --> L[Release Approved]
+
+K --> M[Audit Lock]
+H --> M
+I --> M
+J --> M
