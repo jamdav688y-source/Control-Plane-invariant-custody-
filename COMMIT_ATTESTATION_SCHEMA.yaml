@@ -1,0 +1,48 @@
+schema_version: 1.0.0
+artifact: COMMIT_ATTESTATION
+
+metadata:
+  commit_id: string
+  timestamp: ISO-8601
+  author_id: string
+  authority_owner: string
+  invariant_version: string
+  topology_version: string
+
+intent:
+  transaction_scope: string
+  declared_invariants:
+    - invariant_id: string
+      invariant_hash: string
+  authority_scope_hash: string
+
+pre_commit_validation:
+  rollback_path_defined: boolean
+  rollback_reference: string
+  invariant_validation_passed: boolean
+  authority_validation_passed: boolean
+  drift_vector_detected: boolean
+
+enforcement_rules:
+  block_commit_if:
+    - invariant_validation_passed == false
+    - authority_validation_passed == false
+    - rollback_path_defined == false
+    - drift_vector_detected == true
+
+post_commit_requirements:
+  audit_log_reference: string
+  replay_reconstructible: boolean
+  sentinel_signature: string
+  judge_attestation: string
+
+failure_modes:
+  invariant_breach: halt_commit
+  authority_relocation: halt_commit
+  rollback_missing: halt_commit
+  drift_detected: trigger_rollback
+
+attestation:
+  final_authority_holder: string
+  custody_chain_hash: string
+  release_decision: APPROVED | REJECTED
